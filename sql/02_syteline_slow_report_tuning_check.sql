@@ -22,8 +22,8 @@
  *   - Statistics are per-database and per-cached-plan, not a historical record.
  *     The database_id = DB_ID() filter means procedures cached in other
  *     databases will not appear.
- *   - Permission (on-premises SQL Server): VIEW SERVER STATE on SQL Server 2019
- *     and earlier; VIEW SERVER PERFORMANCE STATE on SQL Server 2022+.
+ *   - Permission (on-premises SQL Server): VIEW SERVER STATE (on SQL Server
+ *     2022+, the narrower VIEW SERVER PERFORMANCE STATE is also enough).
  *     VIEW DATABASE STATE is not sufficient for this DMV on on-premises
  *     SQL Server. Azure SQL Database and Azure SQL Managed Instance have
  *     service-specific requirements — confirm against Microsoft's current
@@ -69,6 +69,8 @@ ORDER BY avg_elapsed_seconds DESC;
 -- =============================================================================
 /*
 SET STATISTICS IO, TIME ON;
--- EXEC dbo.Rpt_AccountsReceivableAgingSp ...   (paste parameters)
+-- EXEC dbo.<ReportProcedureSp> ...   (find the name in Background Task
+--                                    Definitions; paste parameters from
+--                                    Background Task History)
 SET STATISTICS IO, TIME OFF;
 */
