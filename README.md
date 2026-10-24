@@ -1,25 +1,21 @@
 # Infor SyteLine (CSI) & Epicor Kinetic ERP Diagnostics Toolkit
 
-> **Verification status (as of publication):** These scripts have been reviewed
-> against Infor SyteLine / Epicor Kinetic documentation and are believed to be
-> correct, but they have **not yet been executed against a production or
-> representative test SyteLine database** by the maintainer. Treat them as
-> reviewed starters, not certified tools. Verify schema, permissions, and site
-> scope in your own environment before use. See `TESTING.md` for the
-> compatibility evidence we will publish once available.
-
 Practical, read-only SQL Server diagnostic queries, cached-procedure performance checks, TaskMan troubleshooting checklists, and Epicor Kinetic BAQ / DMT pre-load validation checklists.
 
 Maintained by **Al Hasib Tamim** at **[Clear Cutover](https://clearcutover.com/)** — fixed-price contractor for [Infor SyteLine & CloudSuite Industrial](https://clearcutover.com/syteline) and [Epicor Kinetic Partner Subcontracting](https://clearcutover.com/epicor-kinetic).
 
+Toolkit home page with usage notes: **[SyteLine SQL diagnostics toolkit](https://clearcutover.com/tools/syteline-sql-diagnostics)**
+
+> **Before you run anything:** these are starting points, not certified tools. Schema, permissions, and site scope vary between SyteLine versions and customizations, so verify each script on a test copy of your database first. `TESTING.md` lists the environments the scripts have been run against.
+
 ## Supported Versions & Prerequisites
 
 - **Infor SyteLine / CSI:** 8, 9, 10 (on-premises SQL Server). CloudSuite Industrial cloud tenants may restrict DMV access.
-- **Epicor Kinetic:** Cloud and on-premises. BAQ / DMT checklists are version-conditional — see the labels inside each checklist. **Nothing in this repository is certified against a specific Epicor Kinetic release.**
+- **Epicor Kinetic:** Cloud and on-premises. Behaviour varies by release, so check each item against the version you're working on.
 - **SQL Server:** `sys.dm_exec_input_buffer` requires SQL Server 2014 SP2 / 2016+. On older versions use `DBCC INPUTBUFFER`.
 - **Permissions (per script, per SQL Server version):**
-  - `sql/01_syteline_blocking_spid_check.sql` uses `sys.dm_exec_requests`, `sys.dm_exec_sessions`, `sys.dm_exec_sql_text`, and `sys.dm_exec_input_buffer`. These are **server-scoped** DMVs and require `VIEW SERVER STATE` on SQL Server 2019 and earlier, or `VIEW SERVER PERFORMANCE STATE` on SQL Server 2022 and later. `VIEW DATABASE STATE` is **not** sufficient for this script on on-premises SQL Server. Azure SQL Database and Azure SQL Managed Instance have service-specific requirements — confirm against Microsoft's current documentation before relying on this script there.
-  - `sql/02_syteline_slow_report_tuning_check.sql` uses `sys.dm_exec_procedure_stats`. On **on-premises SQL Server**, the required permission is `VIEW SERVER STATE` on SQL Server 2019 and earlier, and `VIEW SERVER PERFORMANCE STATE` on SQL Server 2022 and later. `VIEW DATABASE STATE` is **not** sufficient for this DMV on on-premises SQL Server. **Azure SQL Database and Azure SQL Managed Instance have service-specific permission requirements** — confirm the current requirement for your service tier against Microsoft's documentation before relying on this script there. If `OBJECT_NAME(...)` returns `NULL`, the login may lack metadata visibility on the procedure; granting `VIEW DEFINITION` can address that visibility issue, but it does **not** replace the DMV permission above.
+  - `sql/01_syteline_blocking_spid_check.sql` uses `sys.dm_exec_requests`, `sys.dm_exec_sessions`, `sys.dm_exec_sql_text`, and `sys.dm_exec_input_buffer`. These are **server-scoped** DMVs and require `VIEW SERVER STATE` (on SQL Server 2022 and later, the narrower `VIEW SERVER PERFORMANCE STATE` is also enough). `VIEW DATABASE STATE` is **not** sufficient for this script on on-premises SQL Server. Azure SQL Database and Azure SQL Managed Instance have service-specific requirements — confirm against Microsoft's current documentation before relying on this script there.
+  - `sql/02_syteline_slow_report_tuning_check.sql` uses `sys.dm_exec_procedure_stats`. On **on-premises SQL Server**, the required permission is `VIEW SERVER STATE` (on SQL Server 2022 and later, the narrower `VIEW SERVER PERFORMANCE STATE` is also enough). `VIEW DATABASE STATE` is **not** sufficient for this DMV on on-premises SQL Server. **Azure SQL Database and Azure SQL Managed Instance have service-specific permission requirements** — confirm the current requirement for your service tier against Microsoft's documentation before relying on this script there. If `OBJECT_NAME(...)` returns `NULL`, the login may lack metadata visibility on the procedure; granting `VIEW DEFINITION` can address that visibility issue, but it does **not** replace the DMV permission above.
   - `sql/03_syteline_data_health_check_readonly.sql` reads ordinary user tables (`item_mst`, `custaddr_mst`). It requires only `SELECT` on those tables/views in the target database.
 - **Schema note:** Table names in `sql/03_*` assume standard `_mst` master tables (e.g., `item_mst`, `custaddr_mst`). Some environments expose site-filtered views (`item`, `custaddr`) instead, or use `_mst_all` variants. Verify against your installation's schema and site scope before running.
 
@@ -31,12 +27,12 @@ Maintained by **Al Hasib Tamim** at **[Clear Cutover](https://clearcutover.com/)
 | `sql/02_syteline_slow_report_tuning_check.sql` | Infor SyteLine / CSI & SSRS | Lists the slowest **cached** report stored procedures by elapsed time and logical reads, plus a manual SSMS testing template for isolating cursor, scalar-UDF, and non-SARGable predicate issues. Does not auto-detect query patterns. | [Why your SyteLine report is slow](https://clearcutover.com/blog/syteline-slow-report-sql-tuning) |
 | `sql/03_syteline_data_health_check_readonly.sql` | Infor SyteLine / CSI (`_mst` tables) | Read-only pre-MRP and pre-cutover exception queries for zero-cost items, missing lead times, and duplicate customer names. Verify table names and site scope for your version. | [Infor SyteLine data health check & upgrade support](https://clearcutover.com/syteline) |
 | `checklists/syteline_taskman_stuck_report_checklist.md` | Infor SyteLine / CSI | 5-step verification chain for reports stuck in `WAITING`, `READY`, or `RUNNING`, or finishing with no PDF in the output folder. | [SyteLine report stuck in WAITING](https://clearcutover.com/blog/syteline-report-stuck-waiting-no-pdf) |
-| `checklists/epicor_kinetic_baq_and_dmt_checklist.md` | Epicor Kinetic (Cloud & On-Premises) | Audit checklist for common BAQ defects, post-upgrade SSRS/RDD errors, and DMT CSV pre-load validation rules. Statements are labelled as heuristics, SQL Server behaviour, or environment-specific recommendations — none are release-certified. | [Epicor Kinetic subcontract: SSRS reports, BAQs and DMT](https://clearcutover.com/epicor-kinetic) |
-| `TESTING.md` | — | Test evidence log recording the environments, SQL Server builds, and permission sets each script has been executed against. | — |
+| `checklists/epicor_kinetic_baq_and_dmt_checklist.md` | Epicor Kinetic (Cloud & On-Premises) | Audit checklist for common BAQ defects, post-upgrade SSRS/RDD errors, and DMT CSV pre-load validation rules. Items are labelled as common failure patterns, SQL Server behaviour, or environment-specific checks. | [Epicor Kinetic subcontract: SSRS reports, BAQs and DMT](https://clearcutover.com/epicor-kinetic) |
+| `TESTING.md` | — | Log of the environments, SQL Server builds, and permission sets the scripts have been run against. | — |
 
 ## Complete Infor SyteLine & ERP Reference Guides
 
-All scripts and checklists in this repository draw on the Clear Cutover team's ERP administration and report-development work. Read the full step-by-step guides on the [Clear Cutover Blog](https://clearcutover.com/blog):
+All scripts and checklists in this repository come from my ERP administration and report-development work at Clear Cutover. Read the full step-by-step guides on the [Clear Cutover Blog](https://clearcutover.com/blog):
 
 - **Backlog Management & Triage:** [The SyteLine report and data backlog](https://clearcutover.com/blog/syteline-report-data-backlog-guide)
 - **Queue & TaskMan Troubleshooting:** [SyteLine report stuck in WAITING, or no PDF in the output folder](https://clearcutover.com/blog/syteline-report-stuck-waiting-no-pdf)
@@ -65,3 +61,5 @@ All scripts and checklists in this repository draw on the Clear Cutover team's E
 ## License
 
 Released under the MIT License. Not affiliated with Infor or Epicor; all trademarks belong to their respective owners.
+
+If you reference or adapt these scripts in a blog post, wiki, or training material, a link back to the [toolkit page](https://clearcutover.com/tools/syteline-sql-diagnostics) is appreciated.
