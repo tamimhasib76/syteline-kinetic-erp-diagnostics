@@ -27,7 +27,7 @@ Toolkit home page with usage notes: **[SyteLine SQL diagnostics toolkit](https:/
 | `sql/02_syteline_slow_report_tuning_check.sql` | Infor SyteLine / CSI & SSRS | Lists the slowest **cached** report stored procedures by elapsed time and logical reads, plus a manual SSMS testing template for isolating cursor, scalar-UDF, and non-SARGable predicate issues. Does not auto-detect query patterns. | [Why your SyteLine report is slow](https://clearcutover.com/blog/syteline-slow-report-sql-tuning) |
 | `sql/03_syteline_data_health_check_readonly.sql` | Infor SyteLine / CSI (`_mst` tables) | Read-only pre-MRP and pre-cutover exception queries for zero-cost items, missing lead times, and duplicate customer names. Verify table names and site scope for your version. | [Infor SyteLine data health check & upgrade support](https://clearcutover.com/syteline) |
 | `checklists/syteline_taskman_stuck_report_checklist.md` | Infor SyteLine / CSI | 5-step verification chain for reports stuck in `WAITING`, `READY`, or `RUNNING`, or finishing with no PDF in the output folder. | [SyteLine report stuck in WAITING](https://clearcutover.com/blog/syteline-report-stuck-waiting-no-pdf) |
-| `checklists/epicor_kinetic_baq_and_dmt_checklist.md` | Epicor Kinetic (Cloud & On-Premises) | Audit checklist for common BAQ defects, post-upgrade SSRS/RDD errors, and DMT CSV pre-load validation rules. Items are labelled as common failure patterns, SQL Server behaviour, or environment-specific checks. | [Epicor Kinetic subcontract: SSRS reports, BAQs and DMT](https://clearcutover.com/epicor-kinetic) |
+| `checklists/epicor_kinetic_baq_and_dmt_checklist.md` | Epicor Kinetic (Cloud & On-Premises) | Audit checklist for common BAQ defects, post-upgrade SSRS/RDD errors, and DMT CSV pre-load validation rules. Items are labelled as common failure patterns, SQL Server behaviour, or environment-specific checks. | [Epicor Kinetic subcontracting](https://clearcutover.com/epicor-kinetic), [DMT troubleshooting](https://clearcutover.com/blog/epicor-kinetic-dmt-errors-troubleshooting) & [BAQ tuning](https://clearcutover.com/blog/kinetic-baq-timeout-parttran-tranglc) |
 | `TESTING.md` | — | Log of the environments, SQL Server builds, and permission sets the scripts have been run against. | — |
 
 ## Complete Infor SyteLine & ERP Reference Guides
@@ -42,6 +42,18 @@ All scripts and checklists in this repository come from my ERP administration an
 - **Task Architecture (`RPT`, `SP`, `EXE`, `IDOMTH`):** [SyteLine Background Task Definitions explained](https://clearcutover.com/blog/syteline-background-task-definitions)
 - **Report Modernization:** [Converting SyteLine Crystal Reports to SSRS](https://clearcutover.com/blog/syteline-crystal-to-ssrs-migration)
 - **Hiring & Rate Benchmarks:** [SyteLine consultant rates in 2026](https://clearcutover.com/blog/syteline-consultant-rates-hiring-guide)
+
+## Complete Epicor Kinetic Reference Guides
+
+Read the step-by-step Epicor Kinetic guides on the [Clear Cutover Blog](https://clearcutover.com/blog):
+
+- **BAQ Performance & Tuning:** [Fixing BAQ timeouts on PartTran and TranGLC](https://clearcutover.com/blog/kinetic-baq-timeout-parttran-tranglc)
+- **Data Migration Tool (DMT):** [Epicor Kinetic DMT errors and troubleshooting checklist](https://clearcutover.com/blog/epicor-kinetic-dmt-errors-troubleshooting)
+- **SSRS & RDD Reporting:** [BAQ Report vs RDD Report in Epicor Kinetic](https://clearcutover.com/blog/baq-report-vs-rdd-report-epicor-kinetic) and [How to add a field to an Epicor Kinetic SSRS report](https://clearcutover.com/blog/epicor-kinetic-add-field-to-ssrs-report)
+- **BPM Alerts:** [Epicor Kinetic BPM email alerts without duplicate triggers](https://clearcutover.com/blog/epicor-bpm-email-alerts-without-duplicates)
+- **Client Troubleshooting:** [Fixing the Epicor Kinetic blank white screen](https://clearcutover.com/blog/epicor-kinetic-blank-white-screen-fix)
+- **Security & User Administration:** [Epicor Kinetic password reset & account lock recovery](https://clearcutover.com/blog/epicor-kinetic-reset-password-disable-user)
+- **Partner Subcontracting:** [Epicor Kinetic subcontract tickets: SSRS reports, BAQs, and DMT](https://clearcutover.com/epicor-kinetic)
 
 ## Safety & Read-Only Usage Guidelines
 
