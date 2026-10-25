@@ -49,7 +49,7 @@ Read the step-by-step Epicor Kinetic guides on the [Clear Cutover Blog](https://
 
 - **BAQ Performance & Tuning:** [Fixing BAQ timeouts on PartTran and TranGLC](https://clearcutover.com/blog/kinetic-baq-timeout-parttran-tranglc)
 - **Data Migration Tool (DMT):** [Epicor Kinetic DMT errors and troubleshooting checklist](https://clearcutover.com/blog/epicor-kinetic-dmt-errors-troubleshooting)
-- **SSRS & RDD Reporting:** [BAQ Report vs RDD Report in Epicor Kinetic](https://clearcutover.com/blog/baq-report-vs-rdd-report-epicor-kinetic) and [How to add a field to an Epicor Kinetic SSRS report](https://clearcutover.com/blog/epicor-kinetic-add-field-to-ssrs-report)
+- **SSRS & RDD Reporting:** [BAQ Report vs RDD Report in Epicor Kinetic](https://clearcutover.com/blog/baq-report-vs-rdd-report-epicor-kinetic) and [How to add a field to an Epicor Kinetic SSRS report](https://clearcutover.com/blog/kinetic-add-field-ssrs-report)
 - **BPM Alerts:** [Epicor Kinetic BPM email alerts without duplicate triggers](https://clearcutover.com/blog/epicor-bpm-email-alerts-without-duplicates)
 - **Client Troubleshooting:** [Fixing the Epicor Kinetic blank white screen](https://clearcutover.com/blog/epicor-kinetic-blank-white-screen-fix)
 - **Security & User Administration:** [Epicor Kinetic password reset & account lock recovery](https://clearcutover.com/blog/epicor-kinetic-reset-password-disable-user)
